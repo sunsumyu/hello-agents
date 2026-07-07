@@ -1,0 +1,108 @@
+{
+  "notes": [
+    {
+      "id": "note_20260430_002416_0",
+      "title": "任务 1: 2026 AI 技术突破",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_1"
+      ],
+      "created_at": "2026-04-30T00:24:16.815405"
+    },
+    {
+      "id": "note_20260430_002416_1",
+      "title": "任务 2: 行业应用与商业化",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_2"
+      ],
+      "created_at": "2026-04-30T00:24:16.829594"
+    },
+    {
+      "id": "note_20260430_002416_2",
+      "title": "任务 3: 算力基础设施演进",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_3"
+      ],
+      "created_at": "2026-04-30T00:24:16.833969"
+    },
+    {
+      "id": "note_20260430_002416_3",
+      "title": "任务 4: 监管政策与伦理",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_4"
+      ],
+      "created_at": "2026-04-30T00:24:16.837503"
+    },
+    {
+      "id": "note_20260430_002558_4",
+      "title": "研究报告：探索ai今年的发展",
+      "type": "conclusion",
+      "tags": [
+        "deep_research",
+        "report"
+      ],
+      "created_at": "2026-04-30T00:25:58.762143"
+    },
+    {
+      "id": "note_20260430_003735_5",
+      "title": "神经元基础理论演进",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_1"
+      ],
+      "created_at": "2026-04-30T00:37:35.608777"
+    },
+    {
+      "id": "note_20260430_003735_6",
+      "title": "任务 2: 前沿观测与操控技术",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_2"
+      ],
+      "created_at": "2026-04-30T00:37:35.629530"
+    },
+    {
+      "id": "note_20260430_003735_7",
+      "title": "连接组学与功能机制",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_3"
+      ],
+      "created_at": "2026-04-30T00:37:35.639177"
+    },
+    {
+      "id": "note_20260430_003735_8",
+      "title": "任务 4: 临床应用与再生医学",
+      "type": "task_state",
+      "tags": [
+        "deep_research",
+        "task_4"
+      ],
+      "created_at": "2026-04-30T00:37:35.643166"
+    },
+    {
+      "id": "note_20260430_004102_9",
+      "title": "研究报告：探索神经元研究发展",
+      "type": "conclusion",
+      "tags": [
+        "deep_research",
+        "report"
+      ],
+      "created_at": "2026-04-30T00:41:02.441670"
+    }
+  ],
+  "metadata": {
+    "created_at": "2026-04-30T00:23:26.703550",
+    "total_notes": 10
+  }
+}

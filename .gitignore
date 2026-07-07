@@ -167,3 +167,22 @@ test_*.py
 !test_tools.py
 .workbuddy/
 memory/
+
+
+
+# 忽略特定的虚拟环境
+venv-agent/
+# 忽略临时脚本与自动生成的报告
+*report_session_*.json
+qdrant_info.txt
+# 忽略本地数据与评测目录
+data/
+data_generation/
+memory_data/
+result/
+scratch/
+temp_gorilla/
+evaluation_reports/
+evaluation_results/
+# 忽略各种笔记目录
+*_notes/
