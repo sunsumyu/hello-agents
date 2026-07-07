@@ -19,11 +19,19 @@ python 07_data_generation_complete_flow.py 30 3.0
 
 import sys
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
-# 添加HelloAgents路径
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "HelloAgents"))
+# 添加必要路径
+chapter12_dir = os.path.dirname(__file__)
+data_gen_dir = os.path.join(chapter12_dir, "data_generation")
 
-from data_generation.run_complete_evaluation import main
+# 将 data_generation 目录加入路径（aime_generator 在这里）
+sys.path.insert(0, data_gen_dir)
+# 将 chapter12 目录加入路径（data_generation 包在这里）
+sys.path.insert(0, chapter12_dir)
+
+from data_generation.run_complete_evaluation import run_complete_evaluation
 
 if __name__ == "__main__":
     # 默认参数
@@ -47,7 +55,7 @@ if __name__ == "__main__":
     print()
     
     # 运行完整流程
-    main(num_problems, delay_seconds)
+    run_complete_evaluation(num_problems, delay_seconds)
 
 # 运行输出示例：
 # ================================================================================

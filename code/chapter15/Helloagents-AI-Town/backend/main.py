@@ -4,6 +4,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
+import os
+from dotenv import load_dotenv
+
+# 强制加载当前目录下的 .env 文件
+load_dotenv()
 
 from config import settings
 from models import (
@@ -12,6 +17,10 @@ from models import (
 )
 from agents import get_npc_manager
 from state_manager import get_state_manager
+
+# 优先级：.env > 默认值
+HOST = os.getenv("API_HOST", "127.0.0.1")
+PORT = int(os.getenv("API_PORT", 8000))
 
 # 生命周期管理
 @asynccontextmanager
@@ -33,8 +42,8 @@ async def lifespan(app: FastAPI):
     await state_manager.start()
     
     print("\n✅ 所有服务已启动!")
-    print(f"📡 API地址: http://{settings.API_HOST}:{settings.API_PORT}")
-    print(f"📚 API文档: http://{settings.API_HOST}:{settings.API_PORT}/docs")
+    print(f"📡 API地址: http://{HOST}:{PORT}")
+    print(f"📚 API文档: http://{HOST}:{PORT}/docs")
     print("="*60 + "\n")
     
     yield

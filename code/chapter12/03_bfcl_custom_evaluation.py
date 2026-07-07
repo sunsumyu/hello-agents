@@ -7,6 +7,10 @@
 适合需要自定义评估流程的场景。
 """
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from hello_agents import SimpleAgent, HelloAgentsLLM
 from hello_agents.evaluation import BFCLDataset, BFCLEvaluator
 
@@ -52,9 +56,9 @@ for detail in results['detailed_results']:
     print()
 
 # 7. 导出结果
-evaluator.export_results(
+evaluator.export_to_bfcl_format(
     results,
-    output_file="./evaluation_results/bfcl_custom_result.json"
+    output_path="./evaluation_results/bfcl_custom_result.json"
 )
 
 print("✅ 结果已导出到 ./evaluation_results/bfcl_custom_result.json")

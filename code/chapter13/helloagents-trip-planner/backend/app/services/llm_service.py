@@ -19,9 +19,12 @@ def get_llm() -> HelloAgentsLLM:
     if _llm_instance is None:
         settings = get_settings()
         
-        # HelloAgentsLLM会自动从环境变量读取配置
-        # 包括OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL等
-        _llm_instance = HelloAgentsLLM()
+        # 读取超时配置，默认 300 秒
+        import os
+        llm_timeout = int(os.getenv("LLM_TIMEOUT", 300))
+        
+        # HelloAgentsLLM 会自动从环境变量读取配置
+        _llm_instance = HelloAgentsLLM(timeout=llm_timeout)
         
         print(f"✅ LLM服务初始化成功")
         print(f"   提供商: {_llm_instance.provider}")

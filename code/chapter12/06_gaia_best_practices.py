@@ -10,6 +10,12 @@
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
+# 使用代理（如需要）
+os.environ["HF_ENDPOINT"] = "https://huggingface.co"
+
 from hello_agents import SimpleAgent, HelloAgentsLLM
 from hello_agents.tools import GAIAEvaluationTool
 

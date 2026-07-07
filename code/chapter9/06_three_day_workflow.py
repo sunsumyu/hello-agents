@@ -159,7 +159,7 @@ def demonstrate_cross_session_continuity():
     maintainer_1 = CodebaseMaintainer(
         project_name="demo_codebase",
         #实际使用的时候替换代码路径
-        codebase_path="/Users/suntao/Documents/GitHub/hello-agents/code/chapter9/codebase",
+        codebase_path=__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "codebase"),
         llm=HelloAgentsLLM()
     )
 
@@ -182,7 +182,7 @@ def demonstrate_cross_session_continuity():
     maintainer_2 = CodebaseMaintainer(
         project_name="demo_codebase",  # 同一个项目
         #实际使用的时候替换代码路径
-        codebase_path="/Users/suntao/Documents/GitHub/hello-agents/code/chapter9/codebase",
+        codebase_path=__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "codebase"),
         llm=HelloAgentsLLM()
     )
 
@@ -216,7 +216,7 @@ def demonstrate_tool_synergy():
     maintainer = CodebaseMaintainer(
         project_name="synergy_demo",
         #实际使用的时候替换代码路径
-        codebase_path="/Users/suntao/Documents/GitHub/hello-agents/code/chapter9/codebase",
+        codebase_path=__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "codebase"),
         llm=HelloAgentsLLM()
     )
 
@@ -261,10 +261,13 @@ def main():
     print("   - 如何组织信息\n")
 
     # 初始化助手
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    target_codebase = os.path.join(current_dir, "codebase")
+
     maintainer = CodebaseMaintainer(
         project_name="demo_codebase",
         #实际使用的时候替换代码路径
-        codebase_path="/Users/suntao/Documents/GitHub/hello-agents/code/chapter9/codebase",
+        codebase_path=target_codebase,
         llm=HelloAgentsLLM()
     )
 

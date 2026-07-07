@@ -22,9 +22,13 @@ import subprocess
 from pathlib import Path
 import argparse
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 # 添加项目路径
-project_root = Path(__file__).parent.parent
+# 当前文件在 code/chapter12/04_run_bfcl_evaluation.py
+# 需要上跳三级回到项目根目录 e:/chain/hello-agents
+project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from hello_agents import SimpleAgent, HelloAgentsLLM
@@ -174,8 +178,18 @@ def run_bfcl_official_eval(model_name: str, category: str) -> bool:
         os.environ['PYTHONUTF8'] = '1'
         
         # 运行BFCL评估
+        import os
+        import sys
+        
+        # 尝试定位 bfcl 可执行文件（解决 Windows 下未激活环境找不到命令的问题）
+        bfcl_cmd = "bfcl"
+        executable_dir = Path(sys.executable).parent
+        potential_bfcl = executable_dir / ("bfcl.exe" if os.name == 'nt' else "bfcl")
+        if potential_bfcl.exists():
+            bfcl_cmd = str(potential_bfcl)
+
         cmd = [
-            "bfcl", "evaluate",
+            bfcl_cmd, "evaluate",
             "--model", model_name,
             "--test-category", category,
             "--partial-eval"

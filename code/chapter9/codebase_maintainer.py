@@ -13,6 +13,9 @@ CodebaseMaintainer - 代码库维护助手
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from hello_agents import HelloAgentsLLM
 from hello_agents.agents import FunctionCallAgent
@@ -412,7 +415,8 @@ class CodebaseMaintainer:
             "activity": {
                 "commands_executed": self.stats["commands_executed"],
                 "notes_created": self.stats["notes_created"],
-                "issues_found": self.stats["issues_found"]
+                "issues_found": self.stats["issues_found"],
+                "tool_calls": self.stats["tool_calls"]
             },
             "notes": note_summary
         }
@@ -439,14 +443,20 @@ def main():
     - 不预定义工作流
     - Agent 根据需求灵活探索代码库
     """
+    from dotenv import load_dotenv
+    load_dotenv()
     print("=" * 80)
     print("CodebaseMaintainer 演示（Agentic 版本）")
     print("=" * 80 + "\n")
 
+    import os
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    target_codebase = os.path.join(current_dir, "codebase")
+
     # 初始化助手
     maintainer = CodebaseMaintainer(
-        project_name="my_flask_app",
-        codebase_path="./my_flask_app",
+        project_name="demo_codebase",
+        codebase_path=target_codebase,
         llm=HelloAgentsLLM()
     )
 

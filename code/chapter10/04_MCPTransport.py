@@ -39,8 +39,11 @@ print(result)
 
 from hello_agents.tools import MCPTool
 
+import os
+
 # 方式1：使用自定义Python服务器
-mcp_tool = MCPTool(server_command=["python", "my_mcp_server.py"])
+server_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "my_mcp_server.py")
+mcp_tool = MCPTool(server_command=["python", server_path])
 
 # 方式2：使用社区服务器（文件系统）
 mcp_tool = MCPTool(server_command=["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
@@ -50,10 +53,11 @@ result = mcp_tool.run({"action": "list_tools"})
 print(result)
 
 # 调用工具
+readme_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "my_README.md")
 result = mcp_tool.run({
     "action": "call_tool",
     "tool_name": "read_file",
-    "arguments": {"path": "my_README.md"}
+    "arguments": {"path": readme_path}
 })
 print(result)
 

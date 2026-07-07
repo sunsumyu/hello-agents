@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from typing import Any, Dict, Iterator, Optional
 
@@ -11,6 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from loguru import logger
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+# 加载 .env 文件
+load_dotenv()
 
 from config import Configuration, SearchAPI
 from agent import DeepResearchAgent
@@ -180,11 +185,13 @@ app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
+    from config import Configuration
 
+    config = Configuration.from_env()
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",
-        port=8000,
+        host=os.getenv("HOST", "127.0.0.1"),
+        port=int(os.getenv("PORT", 8000)),
         reload=True,
         log_level="info"
     )

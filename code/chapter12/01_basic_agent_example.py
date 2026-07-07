@@ -7,6 +7,10 @@
 但我们如何知道它的表现如何？这就是为什么需要评估系统。
 """
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from hello_agents import SimpleAgent, HelloAgentsLLM
 from hello_agents.tools import SearchTool
 

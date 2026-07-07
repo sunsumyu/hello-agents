@@ -14,6 +14,10 @@ Win Rate评估通过对比生成题目和真题，评估生成质量：
 import sys
 import os
 import json
+from dotenv import load_dotenv
+
+# 加载环境变量
+load_dotenv()
 
 # 添加HelloAgents路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "HelloAgents"))
@@ -46,15 +50,14 @@ print("Win Rate评估")
 print("="*60)
 
 print("\n加载参考数据集...")
-dataset = AIDataset()
+dataset = AIDataset(dataset_type="real", year=2025)
 reference_problems = dataset.load()
 print(f"✅ 已加载 {len(reference_problems)} 道AIME真题")
 
 # 3. 创建Win Rate评估器
-llm = HelloAgentsLLM(model_name="gpt-4o")
+llm = HelloAgentsLLM(timeout=300)
 evaluator = WinRateEvaluator(
-    llm=llm,
-    reference_problems=reference_problems
+    llm=llm
 )
 
 # 4. 运行Win Rate评估
@@ -62,8 +65,9 @@ print(f"\n开始Win Rate评估...")
 print(f"  生成题目数: {len(generated_problems)}")
 print(f"  对比数量: 20")
 
-results = evaluator.evaluate(
+results = evaluator.evaluate_win_rate(
     generated_problems=generated_problems,
+    reference_problems=reference_problems,
     num_comparisons=20  # 进行20次对比
 )
 
@@ -72,19 +76,19 @@ print("\n" + "="*60)
 print("评估结果")
 print("="*60)
 
-print(f"\nWin Rate: {results['win_rate']:.2%}")
-print(f"Tie Rate: {results['tie_rate']:.2%}")
-print(f"Loss Rate: {results['loss_rate']:.2%}")
+print(f"\nWin Rate: {results['metrics']['win_rate']:.2%}")
+print(f"Tie Rate: {results['metrics']['tie_rate']:.2%}")
+print(f"Loss Rate: {results['metrics']['loss_rate']:.2%}")
 
 print(f"\n详细统计:")
-print(f"  总对比数: {results['total_comparisons']}")
-print(f"  生成题目胜: {results['wins']}")
-print(f"  平局: {results['ties']}")
-print(f"  真题胜: {results['losses']}")
+print(f"  总对比数: {results['metrics']['total_comparisons']}")
+print(f"  生成题目胜: {results['metrics']['wins']}")
+print(f"  平局: {results['metrics']['ties']}")
+print(f"  真题胜: {results['metrics']['losses']}")
 
 # 6. 质量评估
 print(f"\n质量评估:")
-win_rate = results['win_rate']
+win_rate = results['metrics']['win_rate']
 
 if 0.45 <= win_rate <= 0.55:
     print("✅ 优秀 - 生成质量接近AIME真题水平")
@@ -102,11 +106,11 @@ print("="*60)
 
 for i, comparison in enumerate(results['comparisons'][:5], 1):
     print(f"\n对比 {i}:")
-    print(f"  生成题目: {comparison['generated_problem'][:60]}...")
-    print(f"  真题: {comparison['reference_problem'][:60]}...")
-    print(f"  结果: {comparison['result']}")
+    print(f"  题目A (ID): {comparison['problem_a_id']}")
+    print(f"  题目B (ID): {comparison['problem_b_id']}")
+    print(f"  胜者: {comparison['actual_winner']}")
     if 'reason' in comparison:
-        print(f"  理由: {comparison['reason'][:100]}...")
+        print(f"  理由: {comparison['reason'][:150]}...")
 
 # 8. 保存评估结果
 output_file = "./evaluation_results/win_rate_results.json"

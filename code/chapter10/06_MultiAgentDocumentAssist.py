@@ -10,7 +10,7 @@ from hello_agents.tools import MCPTool
 from dotenv import load_dotenv
 
 # 加载.env文件中的环境变量
-load_dotenv(dotenv_path="../HelloAgents/.env")
+load_dotenv()
 
 print("="*70)
 print("多Agent协作的智能文档助手")
@@ -38,7 +38,9 @@ github_tool = MCPTool(
     name="gh",
     server_command=["npx", "-y", "@modelcontextprotocol/server-github"]
 )
-github_searcher.add_tool(github_tool)
+# 展开工具，让 Agent 看到具体的搜索功能
+for tool in github_tool.get_expanded_tools():
+    github_searcher.add_tool(tool)
 
 # ============================================================
 # Agent 2: 文档生成专家
@@ -65,7 +67,9 @@ fs_tool = MCPTool(
     name="fs",
     server_command=["npx", "-y", "@modelcontextprotocol/server-filesystem", "."]
 )
-document_writer.add_tool(fs_tool)
+# 展开工具，让 Agent 看到具体的文件操作功能
+for tool in fs_tool.get_expanded_tools():
+    document_writer.add_tool(tool)
 
 # ============================================================
 # 执行任务
@@ -113,12 +117,13 @@ try:
     print("\n【步骤5】保存报告到文件...")
     import os
     try:
-        with open("report.md", "w", encoding="utf-8") as f:
+        report_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report.md")
+        with open(report_path, "w", encoding="utf-8") as f:
             f.write(report_content)
-        print("✅ 报告已保存到 report.md")
+        print(f"✅ 报告已保存到 {report_path}")
 
         # 验证文件
-        file_size = os.path.getsize("report.md")
+        file_size = os.path.getsize(report_path)
         print(f"✅ 文件大小: {file_size} 字节")
     except Exception as e:
         print(f"❌ 保存失败: {e}")

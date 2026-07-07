@@ -326,6 +326,13 @@ const activeSection = ref('overview')
 const activeDays = ref<number[]>([0]) // 默认展开第一天
 let map: any = null
 
+// 设置高德地图安全密钥
+if (typeof window !== 'undefined') {
+  (window as any)._AMapSecurityConfig = {
+    securityJsCode: import.meta.env.VITE_AMAP_SECURITY_JS_CODE,
+  }
+}
+
 onMounted(async () => {
   const data = sessionStorage.getItem('tripPlan')
   if (data) {
